@@ -11,7 +11,6 @@ print_r("Helldfo\n");
 	if ($state->your_turn) {
 		$strength = RankHand ($state->hand, $state->community_cards);
 	//	print_r ("\nCards are- ".$state->hand." and ".$state->community_cards."\n");
-
 		echo "\n\n Hand RANK: ";
 		print_r( $strength );
 		echo "\n\n";
@@ -23,6 +22,7 @@ print_r("Helldfo\n");
 			case 'flop':
 				if ($strength >= 4)
 					print_r (act("raise", "".($state->stack/2)));	
+
 				else
 					print_r (act("call"));
 				break;
