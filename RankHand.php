@@ -77,6 +77,36 @@ function isFlush($hand,$community){
 }
 
 function isStraight($hand,$community){
+    $cardCatalog=array();
+    for($i=0;$i<count($hand);$i++)
+        if(!isset($cardCatalog[$hand[$i]->getValue()]))
+            $cardCatalog[$hand[$i]->getValue()]=1;
+    for($i=0;$i<count($community);$i++)
+        if(!isset($cardCatalog[$community[$i]->getValue()]))
+            $cardCatalog[$community[$i]->getValue()]=1;
+    ksort($cardCatalog);
+    $count=0;
+    $prev;
+    foreach ($cardCatalog as $key => $value) 
+        if($count>4)
+            return true;
+        elseif(!isset($prev))
+        {
+            $prev=$key;
+            $count=1;
+        }
+        elseif($key==$prev+1)
+        {
+            $prev=$key;
+            $count++;
+        }
+        else
+        {
+            $prev=$key;
+            $count=1;
+        }
+    if($count>4)
+        return true;
     return false;
 }
 
