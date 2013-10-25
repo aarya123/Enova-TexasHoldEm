@@ -1,0 +1,27 @@
+<html>
+<head>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
+
+	<script>
+	var loop = function() {
+		setTimeout( function() {
+				$('#xyz').load('index.php', function() {
+					console.log('loaded');
+				});
+				loop();
+			}, 3000);
+		}
+		
+		$(document).ready(function() {
+			loop();			
+		});
+	</script>
+
+</head>
+
+<body>
+	<div id='xyz'>
+	</div>
+</body>
+</html>

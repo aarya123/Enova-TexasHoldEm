@@ -2,15 +2,15 @@
 <?php
 
 include_once "states.php";
-//include_once "RankHand.php";
+include_once "RankHand.php";
 
 print_r("Helldfo\n");
 
-while (true) {
+//while (true) {
 	$state = getState();
 	if ($state->your_turn) {
 		$strength = RankHand ($state->hand, $state->community_cards);
-		print_r ("\nCards are- ".$state->hand." and ".$state->community_cards"\n");
+	//	print_r ("\nCards are- ".$state->hand." and ".$state->community_cards."\n");
 
 		echo "\n\n Hand RANK: ";
 		print_r( $strength );
@@ -21,29 +21,29 @@ while (true) {
 				print_r (act("call"));
 				break;
 			case 'flop':
-				if ($strenth >= 4)
-					print_r (act("raise", "".($state->stack/2));	
+				if ($strength >= 4)
+					print_r (act("raise", "".($state->stack/2)));	
 				else
 					print_r (act("call"));
 				break;
 			case 'turn':
-				if ($strenth > 5)
+				if ($strength > 5)
 					print_r (act("raise", "".$state->stack));	
-				elseif ($strenth == 4)
-					print_r (act("raise", "".($state->stack/2));	
-				elseif ($strenth >= 2)
+				elseif ($strength == 4)
+					print_r (act("raise", "".($state->stack/2)));	
+				elseif ($strength >= 2)
 					print_r (act("call"));
-				elseif ($strenth < 2)
+				elseif ($strength < 2)
 					print_r (act("fold"));
 				break;
 			case 'river':
-				if ($strenth > 5)
+				if ($strength > 5)
 					print_r (act("raise", "".$state->stack));	
-				elseif ($strenth == 4)
-					print_r (act("raise", "".($state->stack/2));	
-				elseif ($strenth >= 3)
+				elseif ($strength == 4)
+					print_r (act("raise", "".($state->stack/2)));	
+				elseif ($strength >= 3)
 					print_r (act("call"));
-				elseif ($strenth < 3)
+				elseif ($strength < 3)
 					print_r (act("fold"));
 				break;
 			default:
@@ -55,8 +55,7 @@ while (true) {
 	else {
 		print_r("\nNot your turn yet\n");
 	}
-	sleep (1);
-}
+//}
 
 
 ?>
