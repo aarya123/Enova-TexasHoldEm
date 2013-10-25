@@ -12,7 +12,7 @@ function getState () {
 	 return $getRes;
 }
 
-function act ($actName, $amt) {
+function act ($actName, $amt="0") {
 $url = 'http://nolimitcodeem.com/api/players/4f954fd3-17e4-440e-a708-626a4dc0a1a0/';
 
 	$url .= '/action';
