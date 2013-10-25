@@ -71,20 +71,33 @@ function isThree($hand,$community){
 }
 
 function isTwoPair($hand,$community){
+    $pairCount=0;
+    if($hand[0]->getValue()==$hand[1]->getValue())
+        $pairCount++;
+    for($i=0;$i<count($community);$i++)
+        for($j=$i+1;$j<count($community);$j++)
+            if($community[$i]->getValue()==$community[$j]->getValue())
+                $pairCount++;
+    for($i=0;$i<count($hand);$i++)
+        for($j=0;$j<count($community);$j++)
+            if($hand[$i]->getValue()==$community[$j]->getValue())
+                $pairCount++;
+    if($pairCount>1)
+        return true;
     return false;
 }
 
 function isOnePair($hand,$community){
     if($hand[0]->getValue()==$hand[1]->getValue())
         return true;
-    for($i=0;$i<2;$i++)
-    {
+    for($i=0;$i<count($community);$i++)
+        for($j=$i+1;$j<count($community);$j++)
+            if($community[$i]->getValue()==$community[$j]->getValue())
+                return true;
+    for($i=0;$i<count($hand);$i++)
         for($j=0;$j<count($community);$j++)
-        {
             if($hand[$i]->getValue()==$community[$j]->getValue())
                 return true;
-        }
-    }
     return false;
 }
 
