@@ -51,6 +51,20 @@ function isStraightFlush($hand,$community){
 }
 
 function isFour($hand,$community){
+    $cardCatalog=array();
+    for($i=0;$i<count($hand);$i++)
+        if(isset($cardCatalog[$hand[$i]->getValue()]))
+            $cardCatalog[$hand[$i]->getValue()]++;
+        else
+            $cardCatalog[$hand[$i]->getValue()]=1;
+    for($i=0;$i<count($community);$i++)
+        if(isset($cardCatalog[$community[$i]->getValue()]))
+            $cardCatalog[$community[$i]->getValue()]++;
+        else
+            $cardCatalog[$community[$i]->getValue()]=1;
+    foreach ($cardCatalog as $key => $value) 
+        if($value>3)
+            return true;
     return false;
 }
 
@@ -67,6 +81,20 @@ function isStraight($hand,$community){
 }
 
 function isThree($hand,$community){
+    $cardCatalog=array();
+    for($i=0;$i<count($hand);$i++)
+        if(isset($cardCatalog[$hand[$i]->getValue()]))
+            $cardCatalog[$hand[$i]->getValue()]++;
+        else
+            $cardCatalog[$hand[$i]->getValue()]=1;
+    for($i=0;$i<count($community);$i++)
+        if(isset($cardCatalog[$community[$i]->getValue()]))
+            $cardCatalog[$community[$i]->getValue()]++;
+        else
+            $cardCatalog[$community[$i]->getValue()]=1;
+    foreach ($cardCatalog as $key => $value) 
+        if($value>2)
+            return true;
     return false;
 }
 
