@@ -14,10 +14,10 @@ include 'Card.php';
 10 = Royal Flush
 */
 function rankHand($hand, $community){
-    $handCards=[new Card($hand[0]),new Card($hand[1])];
+    $handCards=[new Card($hand[0]), new Card($hand[1])];
     $communityCards=array();
     for($i=0;$i<count($community);$i++)
-        array_push($communityCards,new Card($communityCards[$i]));
+        array_push($communityCards,new Card($community[$i]));
     if(isRoyalFlush($handCards, $communityCards))
         return 10;
     elseif(isStraightFlush($handCards, $communityCards))
@@ -75,6 +75,16 @@ function isTwoPair($hand,$community){
 }
 
 function isOnePair($hand,$community){
+    if($hand[0]->getValue()==$hand[1]->getValue())
+        return true;
+    for($i=0;$i<2;$i++)
+    {
+        for($j=0;$j<count($community);$j++)
+        {
+            if($hand[$i]->getValue()==$community[$j]->getValue())
+                return true;
+        }
+    }
     return false;
 }
 
