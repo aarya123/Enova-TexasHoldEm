@@ -73,7 +73,25 @@ function isFullHouse($hand,$community){
 }
 
 function isFlush($hand,$community){
-    return false;
+    if (count($hand) + count($community) < 5 ) {
+        return false;
+    }
+    else {
+        $all_cards = array_merge ($hand, $community);
+        foreach ($all_cards as $c1) {
+            $matches = -1;
+            foreach ($all_cards as $c2) {
+                if ($c1->suit == $c2->suit ){
+                    $matches++;
+                    if ($matches == 4) {
+                        return true;
+                    }
+                }
+            }
+            
+        }
+    }
+        return false;
 }
 
 function isStraight($hand,$community){
