@@ -15,11 +15,9 @@ include 'Card.php';
 */
 function rankHand($hand, $community){
     $handCards=[new Card($hand[0]),new Card($hand[1])];
-    var_dump($handCards);
     $communityCards=array();
     for($i=0;$i<count($community);$i++)
         array_push($communityCards,new Card($communityCards[$i]));
-    print_r($handCards[0].getCardValue());
     if(isRoyalFlush($handCards, $communityCards))
         return 10;
     elseif(isStraightFlush($handCards, $communityCards))
@@ -81,7 +79,7 @@ function isOnePair($hand,$community){
 }
 
 function isHigh($hand,$community){
-    if($hand[0].getValue()>10||$hand[1].getValue()>10)
+    if($hand[0]->getValue()>10||$hand[1]->getValue()>10)
         return true;
     return false;
 }
