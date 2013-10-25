@@ -51,6 +51,20 @@ function isStraightFlush($hand,$community){
 }
 
 function isFour($hand,$community){
+    $cardCatalog=array();
+    for($i=0;$i<count($hand);$i++)
+        if(isset($cardCatalog[$hand[$i]->getValue()]))
+            $cardCatalog[$hand[$i]->getValue()]++;
+        else
+            $cardCatalog[$hand[$i]->getValue()]=1;
+    for($i=0;$i<count($community);$i++)
+        if(isset($cardCatalog[$community[$i]->getValue()]))
+            $cardCatalog[$community[$i]->getValue()]++;
+        else
+            $cardCatalog[$community[$i]->getValue()]=1;
+    foreach ($cardCatalog as $key => $value) 
+        if($value>3)
+            return true;
     return false;
 }
 
@@ -59,32 +73,107 @@ function isFullHouse($hand,$community){
 }
 
 function isFlush($hand,$community){
-    return false;
+    if (count($hand) + count($community) < 5 ) {
+        return false;
+    }
+    else {
+        $all_cards = array_merge ($hand, $community);
+        foreach ($all_cards as $c1) {
+            $matches = -1;
+            foreach ($all_cards as $c2) {
+                if ($c1->suit == $c2->suit ){
+                    $matches++;
+                    if ($matches == 4) {
+                        return true;
+                    }
+                }
+            }
+            
+        }
+    }
+        return false;
 }
 
 function isStraight($hand,$community){
+    $cardCatalog=array();
+    for($i=0;$i<count($hand);$i++)
+        if(!isset($cardCatalog[$hand[$i]->getValue()]))
+            $cardCatalog[$hand[$i]->getValue()]=1;
+    for($i=0;$i<count($community);$i++)
+        if(!isset($cardCatalog[$community[$i]->getValue()]))
+            $cardCatalog[$community[$i]->getValue()]=1;
+    ksort($cardCatalog);
+    $count=0;
+    $prev;
+    foreach ($cardCatalog as $key => $value) 
+        if($count>4)
+            return true;
+        elseif(!isset($prev))
+        {
+            $prev=$key;
+            $count=1;
+        }
+        elseif($key==$prev+1)
+        {
+            $prev=$key;
+            $count++;
+        }
+        else
+        {
+            $prev=$key;
+            $count=1;
+        }
+    if($count>4)
+        return true;
     return false;
 }
 
 function isThree($hand,$community){
+    $cardCatalog=array();
+    for($i=0;$i<count($hand);$i++)
+        if(isset($cardCatalog[$hand[$i]->getValue()]))
+            $cardCatalog[$hand[$i]->getValue()]++;
+        else
+            $cardCatalog[$hand[$i]->getValue()]=1;
+    for($i=0;$i<count($community);$i++)
+        if(isset($cardCatalog[$community[$i]->getValue()]))
+            $cardCatalog[$community[$i]->getValue()]++;
+        else
+            $cardCatalog[$community[$i]->getValue()]=1;
+    foreach ($cardCatalog as $key => $value) 
+        if($value>2)
+            return true;
     return false;
 }
 
 function isTwoPair($hand,$community){
+    $pairCount=0;
+    if($hand[0]->getValue()==$hand[1]->getValue())
+        $pairCount++;
+    for($i=0;$i<count($community);$i++)
+        for($j=$i+1;$j<count($community);$j++)
+            if($community[$i]->getValue()==$community[$j]->getValue())
+                $pairCount++;
+    for($i=0;$i<count($hand);$i++)
+        for($j=0;$j<count($community);$j++)
+            if($hand[$i]->getValue()==$community[$j]->getValue())
+                $pairCount++;
+    if($pairCount>1)
+        return true;
     return false;
 }
 
 function isOnePair($hand,$community){
     if($hand[0]->getValue()==$hand[1]->getValue())
         return true;
-    for($i=0;$i<2;$i++)
-    {
+    for($i=0;$i<count($community);$i++)
+        for($j=$i+1;$j<count($community);$j++)
+            if($community[$i]->getValue()==$community[$j]->getValue())
+                return true;
+    for($i=0;$i<count($hand);$i++)
         for($j=0;$j<count($community);$j++)
-        {
             if($hand[$i]->getValue()==$community[$j]->getValue())
                 return true;
-        }
-    }
     return false;
 }
 
